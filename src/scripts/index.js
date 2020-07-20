@@ -1,3 +1,4 @@
-import '../styles/index.scss';
+import "../styles/index.scss";
+import { ReadableStream } from "web-streams-polyfill";
 
-console.log('webpack starterkit');
+console.log("webpack starterkit", ReadableStream);

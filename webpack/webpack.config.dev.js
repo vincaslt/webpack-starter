@@ -5,7 +5,7 @@ const common = require('./webpack.common.js');
 
 module.exports = merge(common, {
   mode: 'development',
-  devtool: 'cheap-eval-source-map',
+  devtool: false,
   output: {
     chunkFilename: 'js/[name].chunk.js'
   },
@@ -16,10 +16,19 @@ module.exports = merge(common, {
   plugins: [
     new Webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify('development')
-    })
+    }),
+    new Webpack.SourceMapDevToolPlugin({
+      test: /.(t|j)sx?$/,
+      filename: '[file].map'
+  }),
   ],
   module: {
     rules: [
+      {
+        test: /\.js$|\.tsx?$/,
+        use: ['source-map-loader'],
+        enforce: 'pre'
+      },
       {
         test: /\.js$/,
         include: Path.resolve(__dirname, '../src'),
